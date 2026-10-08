@@ -1,0 +1,151 @@
+export declare interface GenerateContentConfig {
+    /** Used to override HTTP request options. */
+    httpOptions?: HttpOptions;
+    /** Abort signal which can be used to cancel the request.
+
+     NOTE: AbortSignal is a client-only operation. Using it to cancel an
+     operation will not cancel the request in the service. You will still
+     be charged usage for any applicable operations.
+     */
+    abortSignal?: AbortSignal;
+    /** Instructions for the model to steer it toward better performance.
+     For example, "Answer as concisely as possible" or "Don't use technical
+     terms in your response".
+     */
+    systemInstruction?: ContentUnion;
+    /** Value that controls the degree of randomness in token selection.
+     Lower temperatures are good for prompts that require a less open-ended or
+     creative response, while higher temperatures can lead to more diverse or
+     creative results.
+     */
+    temperature?: number;
+    /** Tokens are selected from the most to least probable until the sum
+     of their probabilities equals this value. Use a lower value for less
+     random responses and a higher value for more random responses.
+     */
+    topP?: number;
+    /** For each token selection step, the ``top_k`` tokens with the
+     highest probabilities are sampled. Then tokens are further filtered based
+     on ``top_p`` with the final token selected using temperature sampling. Use
+     a lower number for less random responses and a higher number for more
+     random responses.
+     */
+    topK?: number;
+    /** Number of response variations to return.
+     */
+    candidateCount?: number;
+    /** Maximum number of tokens that can be generated in the response.
+     */
+    maxOutputTokens?: number;
+    /** List of strings that tells the model to stop generating text if one
+     of the strings is encountered in the response.
+     */
+    stopSequences?: string[];
+    /** Whether to return the log probabilities of the tokens that were
+     chosen by the model at each step.
+     */
+    responseLogprobs?: boolean;
+    /** Number of top candidate tokens to return the log probabilities for
+     at each generation step.
+     */
+    logprobs?: number;
+    /** Positive values penalize tokens that already appear in the
+     generated text, increasing the probability of generating more diverse
+     content.
+     */
+    presencePenalty?: number;
+    /** Positive values penalize tokens that repeatedly appear in the
+     generated text, increasing the probability of generating more diverse
+     content.
+     */
+    frequencyPenalty?: number;
+    /** When ``seed`` is fixed to a specific number, the model makes a best
+     effort to provide the same response for repeated requests. By default, a
+     random number is used.
+     */
+    seed?: number;
+    /** Output response mimetype of the generated candidate text.
+     Supported mimetype:
+     - `text/plain`: (default) Text output.
+     - `application/json`: JSON response in the candidates.
+     The model needs to be prompted to output the appropriate response type,
+     otherwise the behavior is undefined.
+     This is a preview feature.
+     */
+    responseMimeType?: string;
+    /** The `Schema` object allows the definition of input and output data types.
+     These types can be objects, but also primitives and arrays.
+     Represents a select subset of an [OpenAPI 3.0 schema
+     object](https://spec.openapis.org/oas/v3.0.3#schema).
+     If set, a compatible response_mime_type must also be set.
+     Compatible mimetypes: `application/json`: Schema for JSON response.
+
+     If `response_schema` doesn't process your schema correctly, try using
+     `response_json_schema` instead.
+     */
+    responseSchema?: SchemaUnion;
+    /** Optional. Output schema of the generated response.
+     This is an alternative to `response_schema` that accepts [JSON
+     Schema](https://json-schema.org/). If set, `response_schema` must be
+     omitted, but `response_mime_type` is required. While the full JSON Schema
+     may be sent, not all features are supported. Specifically, only the
+     following properties are supported: - `$id` - `$defs` - `$ref` - `$anchor`
+     - `type` - `format` - `title` - `description` - `enum` (for strings and
+     numbers) - `items` - `prefixItems` - `minItems` - `maxItems` - `minimum` -
+     `maximum` - `anyOf` - `oneOf` (interpreted the same as `anyOf`) -
+     `properties` - `additionalProperties` - `required` The non-standard
+     `propertyOrdering` property may also be set. Cyclic references are
+     unrolled to a limited degree and, as such, may only be used within
+     non-required properties. (Nullable properties are not sufficient.) If
+     `$ref` is set on a sub-schema, no other properties, except for than those
+     starting as a `$`, may be set. */
+    responseJsonSchema?: unknown;
+    /** Configuration for model router requests.
+     */
+    routingConfig?: GenerationConfigRoutingConfig;
+    /** Configuration for model selection.
+     */
+    modelSelectionConfig?: ModelSelectionConfig;
+    /** Safety settings in the request to block unsafe content in the
+     response.
+     */
+    safetySettings?: SafetySetting[];
+    /** Code that enables the system to interact with external systems to
+     perform an action outside of the knowledge and scope of the model.
+     */
+    tools?: ToolListUnion;
+    /** Associates model output to a specific function call.
+     */
+    toolConfig?: ToolConfig;
+    /** Labels with user-defined metadata to break down billed charges. */
+    labels?: Record<string, string>;
+    /** Resource name of a context cache that can be used in subsequent
+     requests.
+     */
+    cachedContent?: string;
+    /** The requested modalities of the response. Represents the set of
+     modalities that the model can return.
+     */
+    responseModalities?: string[];
+    /** If specified, the media resolution specified will be used.
+     */
+    mediaResolution?: MediaResolution;
+    /** The speech generation configuration.
+     */
+    speechConfig?: SpeechConfigUnion;
+    /** If enabled, audio timestamp will be included in the request to the
+     model.
+     */
+    audioTimestamp?: boolean;
+    /** The configuration for automatic function calling.
+     */
+    automaticFunctionCalling?: AutomaticFunctionCallingConfig;
+    /** The thinking features configuration.
+     */
+    thinkingConfig?: ThinkingConfig;
+    /** The image generation configuration.
+     */
+    imageConfig?: ImageConfig;
+    /** Enables enhanced civic answers. It may not be available for all
+     models. This field is not supported in Vertex AI.
+     */
